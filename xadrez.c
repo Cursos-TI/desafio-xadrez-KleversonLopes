@@ -55,6 +55,22 @@ void moveRainha() {
     }
 }
 
+void moveCavalo() {
+    const int MAX_MOVIMENTO_CAVALO = 2;
+    printf("\n*** Movimento do Cavalo ***\n");
+
+    int j = 1;
+
+    for (int i = 1; i <= MAX_MOVIMENTO_CAVALO; i++) {
+        printf("Baixo (%d)\n", i);
+
+        while (i == MAX_MOVIMENTO_CAVALO) {
+            printf("Esquerda (%d)\n", (i - 1));
+            i++;
+        }
+    }
+}
+
 int main() {
     do {
         LimpaTela();
@@ -64,8 +80,9 @@ int main() {
         printf("1. Torre\n");
         printf("2. Bispo\n");
         printf("3. Rainha\n");
-        printf("4. Todas\n");
-        printf("5. Sair\n");
+        printf("4. Cavalo\n");
+        printf("9. Todas\n");
+        printf("0. Sair\n");
         printf("Escolha uma opção: ");
 
         int opcao;
@@ -73,6 +90,9 @@ int main() {
         scanf("%d", &opcao);
 
         switch (opcao) {
+            case 0:
+                printf("Saindo...\n");
+                return 0;
             case 1:
                 moveTorre();
                 break;
@@ -83,13 +103,14 @@ int main() {
                 moveRainha();
                 break;
             case 4:
+                moveCavalo();
+                break;
+            case 9:
                 moveTorre();
                 moveBispo();
                 moveRainha();
+                moveCavalo();
                 break;
-            case 5:
-                printf("Saindo...\n");
-                return 0;
             default:
                 printf("Opção inválida!\n");
         }
