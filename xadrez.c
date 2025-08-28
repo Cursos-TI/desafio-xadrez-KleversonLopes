@@ -3,6 +3,7 @@
  * description: Implementação do sistema de movimentação das peças de xadrez.
  * data: 26-08-2025
  * intituição: Faculdade Estácio de Sá - Vitória - ES
+ * Nível Mestre - 28-08-2025
  */
 
 #include <stdio.h>
@@ -11,6 +12,11 @@
 // Desafio de Xadrez - MateCheck
 // Este código inicial serve como base para o desenvolvimento do sistema de movimentação das peças de xadrez.
 // O objetivo é utilizar estruturas de repetição e funções para determinar os limites de movimentação dentro do jogo.
+
+const int MAX_MOVIMENTO_TORRE = 5;
+const int MAX_MOVIMENTO_BISPO = 5;
+const int MAX_MOVIMENTO_RAINHA = 8;
+const int MAX_MOVIMENTO_CAVALO = 2;
 
 void LimpaTela() {
     // Limpar a tela
@@ -30,44 +36,51 @@ void Espera() {
     getchar();
 }
 
-void moveTorre() {
-    const int MAX_MOVIMENTO_TORRE = 5;
-    printf("\n*** Movimento da Torre ***\n");
-    for (int i = 1; i <= MAX_MOVIMENTO_TORRE; i++) {
-        printf("Direita (%d)\n", i);
+void moveTorre(int i) {
+    if (i == MAX_MOVIMENTO_TORRE) printf("\n*** Movimento da Torre ***\n");
+
+    if (i > 0) {
+        moveTorre(--i);
+        printf("Direita (%d)\n", i+1);
     }
+
 }
 
-void moveBispo() {
-    const int MAX_MOVIMENTO_BISPO = 5;
-    printf("\n*** Movimento do Bispo ***\n");
-    for (int i = 1; i <= MAX_MOVIMENTO_BISPO; i++) {
-        printf("Direita | ");
-        printf("Cima (%d)\n", i);
+void moveBispo(int i) {
+    if (i == MAX_MOVIMENTO_BISPO) printf("\n*** Movimento do Bispo ***\n");
+
+    if (i > 0) {
+        moveBispo(--i);
+        printf("Cima (%d)\n", i+1);
+        int C = i;
+        while (C == i) {
+            C++;
+            printf("Direita (%d)\n", C);
+        }
     }
+
 }
 
-void moveRainha() {
-    const int MAX_MOVIMENTO_RAINHA = 8;
-    printf("\n*** Movimento da Rainha ***\n");
-    for (int i = 1; i <= MAX_MOVIMENTO_RAINHA; i++) {
-        printf("Esquerda (%d)\n", i);
+void moveRainha(int i) {
+    if (i == MAX_MOVIMENTO_RAINHA) printf("\n*** Movimento da Rainha ***\n");
+
+    if (i > 0) {
+        moveRainha(--i);
+        printf("Esquerda (%d)\n", i+1);
     }
+
 }
 
 void moveCavalo() {
-    const int MAX_MOVIMENTO_CAVALO = 2;
     printf("\n*** Movimento do Cavalo ***\n");
 
-    int j = 1;
-
-    for (int i = 1; i <= MAX_MOVIMENTO_CAVALO; i++) {
-        printf("Baixo (%d)\n", i);
-
-        while (i == MAX_MOVIMENTO_CAVALO) {
-            printf("Esquerda (%d)\n", (i - 1));
-            i++;
-        }
+    for (int C = 1, D = 1; C <= MAX_MOVIMENTO_CAVALO; C++, D++) {
+        printf("Cima (%d)\n", C);
+        
+        if (D < 2)
+            continue;
+        
+        printf("Direita (%d)\n", D-1);
     }
 }
 
@@ -94,21 +107,21 @@ int main() {
                 printf("Saindo...\n");
                 return 0;
             case 1:
-                moveTorre();
+                moveTorre(MAX_MOVIMENTO_TORRE);
                 break;
             case 2:
-                moveBispo();
+                moveBispo(MAX_MOVIMENTO_BISPO);
                 break;
             case 3:
-                moveRainha();
+                moveRainha(MAX_MOVIMENTO_RAINHA);
                 break;
             case 4:
                 moveCavalo();
                 break;
             case 9:
-                moveTorre();
-                moveBispo();
-                moveRainha();
+                moveTorre(MAX_MOVIMENTO_TORRE);
+                moveBispo(MAX_MOVIMENTO_BISPO);
+                moveRainha(MAX_MOVIMENTO_RAINHA);
                 moveCavalo();
                 break;
             default:
